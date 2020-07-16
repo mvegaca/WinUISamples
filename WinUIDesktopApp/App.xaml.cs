@@ -10,6 +10,9 @@ using WinUIDesktopApp.Services;
 using WinUIDesktopApp.ViewModels;
 using WinUIDesktopApp.Views;
 
+// To learn more about WinUI, the WinUI project structure,
+// and more about our project templates, see: http://aka.ms/winui-project-info.
+
 namespace WinUIDesktopApp
 {
     public partial class App : Application
@@ -17,13 +20,12 @@ namespace WinUIDesktopApp
         public App()
         {
             this.InitializeComponent();
-            Suspending += OnSuspending;
+            this.Suspending += OnSuspending;
             Ioc.Default.ConfigureServices(ConfigureServices);
         }
 
-        protected override async void OnLaunched(LaunchActivatedEventArgs args)
+        protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
-            base.OnLaunched(args);
             var activationService = Ioc.Default.GetService<IActivationService>();
             await activationService.ActivateAsync(args);
         }
@@ -51,7 +53,7 @@ namespace WinUIDesktopApp
             services.AddSingleton<IActivationService, ActivationService>();
             services.AddSingleton<IPageService, PageService>();
             services.AddSingleton<INavigationService, NavigationService>();
-            services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();            
+            services.AddSingleton<IThemeSelectorService, ThemeSelectorService>();
             services.AddTransient<IToastNotificationsService, ToastNotificationsService>();
 
             // Core Services
