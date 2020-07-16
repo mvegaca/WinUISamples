@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WinUIDesktopApp", "WinUIDes
 EndProject
 Project("{C7167F0D-BC9F-4E6E-AFE1-012C56B48DB5}") = "WinUIDesktopApp (Package)", "WinUIDesktopApp\WinUIDesktopApp (Package)\WinUIDesktopApp (Package).wapproj", "{D6471422-0EE8-4A80-A69A-D61143E87521}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WinUIDesktopApp.Core", "WinUIDesktopApp.Core\WinUIDesktopApp.Core.csproj", "{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -43,6 +45,18 @@ Global
 		{D6471422-0EE8-4A80-A69A-D61143E87521}.Release|x86.ActiveCfg = Release|x86
 		{D6471422-0EE8-4A80-A69A-D61143E87521}.Release|x86.Build.0 = Release|x86
 		{D6471422-0EE8-4A80-A69A-D61143E87521}.Release|x86.Deploy.0 = Release|x86
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Debug|x64.Build.0 = Debug|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Debug|x86.Build.0 = Debug|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Release|x64.ActiveCfg = Release|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Release|x64.Build.0 = Release|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Release|x86.ActiveCfg = Release|Any CPU
+		{F5ABF8E6-6926-48D8-ADDC-8E9979DD0BFB}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
