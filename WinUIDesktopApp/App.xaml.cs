@@ -72,6 +72,9 @@ namespace WinUIDesktopApp
             services.AddTransient<ContentGridDetailViewModel>();
             services.AddTransient<ContentGridDetailPage>();
 
+            services.AddTransient<WebViewViewModel>();
+            services.AddTransient<WebViewPage>();
+
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
         }
