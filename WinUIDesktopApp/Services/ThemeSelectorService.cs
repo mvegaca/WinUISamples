@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Windows.Storage;
+using Windows.UI.Core;
 using WinUIDesktopApp.Contracts.Services;
 using WinUIDesktopApp.Helpers;
 
@@ -27,17 +28,11 @@ namespace WinUIDesktopApp.Services
         }
 
         public async Task SetRequestedThemeAsync()
-        {
-            //foreach (var view in CoreApplication.Views)
-            //{
-            //    await view.CoreWindow.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
-            //    {
-            //        if (Window.Current.Content is FrameworkElement frameworkElement)
-            //        {
-            //            frameworkElement.RequestedTheme = Theme;
-            //        }
-            //    });
-            //}
+        {         
+            if (App.CurrentWindow.Content is FrameworkElement rootElement)
+            {
+                rootElement.RequestedTheme = Theme;
+            }
             await Task.CompletedTask;
         }
 

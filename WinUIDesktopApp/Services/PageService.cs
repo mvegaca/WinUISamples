@@ -19,6 +19,7 @@ namespace WinUIDesktopApp.Services
             Configure<ContentGridViewModel, ContentGridPage>();
             Configure<ContentGridDetailViewModel, ContentGridDetailPage>();
             Configure<WebViewViewModel, WebViewPage>();
+            Configure<DataGridViewModel, DataGridPage>();
             Configure<SettingsViewModel, SettingsPage>();
         }
 

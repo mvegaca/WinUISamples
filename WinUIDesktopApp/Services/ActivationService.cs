@@ -14,13 +14,12 @@ namespace WinUIDesktopApp.Services
         private readonly IEnumerable<IActivationHandler> _activationHandlers;
         private readonly INavigationService _navigationService;
         private readonly IThemeSelectorService _themeSelectorService;
-        private readonly IShellWindow _shell;
 
-        public ActivationService(ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, IShellWindow shell, INavigationService navigationService, IThemeSelectorService themeSelectorService)
+        public ActivationService(IShellWindow _shellWindow, ActivationHandler<LaunchActivatedEventArgs> defaultHandler, IEnumerable<IActivationHandler> activationHandlers, INavigationService navigationService, IThemeSelectorService themeSelectorService)
         {
+            App.CurrentWindow = _shellWindow as Window;
             _defaultHandler = defaultHandler;
             _activationHandlers = activationHandlers;
-            _shell = shell;
             _navigationService = navigationService;
             _themeSelectorService = themeSelectorService;
         }
@@ -31,7 +30,7 @@ namespace WinUIDesktopApp.Services
             // take into account that the splash screen is shown while this code runs.
             await InitializeAsync();
 
-            ((Window)_shell).Activate();
+            App.CurrentWindow.Activate();
 
             // Depending on activationArgs one of ActivationHandlers or DefaultActivationHandler
             // will navigate to the first page

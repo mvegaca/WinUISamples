@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net5.0</TargetFramework>
@@ -17,7 +17,8 @@
     <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.0.0-build.83.gd5d79797bd" />
     <PackageReference Include="Microsoft.Toolkit.Uwp.Notifications" Version="8.0.0-preview2" />
     <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls" Version="8.0.0-preview2" />
-    <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.6" />
+    <PackageReference Include="Microsoft.Toolkit.Uwp.UI.Controls.DataGrid" Version="8.0.0-preview2" />
+    <PackageReference Include="Microsoft.VCRTForwarders.140" Version="1.0.6" />	  
     <PackageReference Include="Microsoft.WinUI" Version="3.0.0-preview2.200713.0" />
     <Manifest Include="$(ApplicationManifest)" />
   </ItemGroup>

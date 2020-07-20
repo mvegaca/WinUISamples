@@ -17,11 +17,13 @@ namespace WinUIDesktopApp
 {
     public partial class App : Application
     {
+        public static Window CurrentWindow { get; set; }
+
         public App()
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-            Ioc.Default.ConfigureServices(ConfigureServices);
+            Ioc.Default.ConfigureServices(ConfigureServices);            
         }
 
         protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
@@ -71,6 +73,9 @@ namespace WinUIDesktopApp
 
             services.AddTransient<ContentGridDetailViewModel>();
             services.AddTransient<ContentGridDetailPage>();
+
+            services.AddTransient<DataGridViewModel>();
+            services.AddTransient<DataGridPage>();
 
             services.AddTransient<WebViewViewModel>();
             services.AddTransient<WebViewPage>();

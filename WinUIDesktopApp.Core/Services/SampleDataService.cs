@@ -499,5 +499,12 @@ namespace WinUIDesktopApp.Core.Services
             await Task.CompletedTask;
             return _allOrders;
         }
+
+        // TODO WTS: Remove this once your grid page is displaying real data.
+        public async Task<IEnumerable<SampleOrder>> GetGridDataAsync()
+        {
+            await Task.CompletedTask;
+            return AllOrders();
+        }
     }
 }

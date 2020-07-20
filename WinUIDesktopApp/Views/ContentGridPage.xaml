@@ -17,7 +17,7 @@
             Padding="{StaticResource MediumLeftRightMargin}"
             DesiredWidth="180"
             ItemHeight="160"
-            IsItemClickEnabled="True"            
+            IsItemClickEnabled="True"
             ItemsSource="{x:Bind ViewModel.Source, Mode=OneWay}"
             SelectionMode="None"
             ItemClickCommand="{x:Bind ViewModel.ItemClickCommand}"

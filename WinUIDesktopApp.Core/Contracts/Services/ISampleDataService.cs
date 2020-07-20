@@ -9,5 +9,7 @@ namespace WinUIDesktopApp.Core.Contracts.Services
         Task<IEnumerable<SampleOrder>> GetMasterDetailDataAsync();
 
         Task<IEnumerable<SampleOrder>> GetContentGridDataAsync();
+
+        Task<IEnumerable<SampleOrder>> GetGridDataAsync();
     }
 }
