@@ -10,7 +10,7 @@ using WinUIDesktopApp.Core.Models;
 
 namespace WinUIDesktopApp.ViewModels
 {
-    public class ContentGridViewModel : ViewModelBase, INavigationAware
+    public class ContentGridViewModel : ObservableRecipient, INavigationAware
     {
         private readonly INavigationService _navigationService;
         private readonly ISampleDataService _sampleDataService;

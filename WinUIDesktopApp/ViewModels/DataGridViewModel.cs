@@ -6,7 +6,7 @@ using WinUIDesktopApp.Core.Models;
 
 namespace WinUIDesktopApp.ViewModels
 {
-    public class DataGridViewModel : ViewModelBase, INavigationAware
+    public class DataGridViewModel : ObservableRecipient, INavigationAware
     {
         private readonly ISampleDataService _sampleDataService;
         public ObservableCollection<SampleOrder> Source { get; } = new ObservableCollection<SampleOrder>();

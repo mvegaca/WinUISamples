@@ -6,7 +6,7 @@ using WinUIDesktopApp.Core.Models;
 
 namespace WinUIDesktopApp.ViewModels
 {
-    public class ContentGridDetailViewModel : ViewModelBase, INavigationAware
+    public class ContentGridDetailViewModel : ObservableRecipient, INavigationAware
     {
         private readonly ISampleDataService _sampleDataService;
         private SampleOrder _item;
@@ -14,7 +14,7 @@ namespace WinUIDesktopApp.ViewModels
         public SampleOrder Item
         {
             get { return _item; }
-            set { Set(ref _item, value); }
+            set { SetProperty(ref _item, value); }
         }
 
         public ContentGridDetailViewModel(ISampleDataService sampleDataService)

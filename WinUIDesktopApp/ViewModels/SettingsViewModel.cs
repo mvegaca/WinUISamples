@@ -7,7 +7,7 @@ using WinUIDesktopApp.Contracts.Services;
 
 namespace WinUIDesktopApp.ViewModels
 {
-    public class SettingsViewModel : ViewModelBase
+    public class SettingsViewModel : ObservableRecipient
     {
         private readonly IThemeSelectorService _themeSelectorService;
         private ElementTheme _elementTheme;
@@ -16,7 +16,7 @@ namespace WinUIDesktopApp.ViewModels
         {
             get { return _elementTheme; }
 
-            set { Set(ref _elementTheme, value); }
+            set { SetProperty(ref _elementTheme, value); }
         }
 
         private string _versionDescription;
@@ -25,7 +25,7 @@ namespace WinUIDesktopApp.ViewModels
         {
             get { return _versionDescription; }
 
-            set { Set(ref _versionDescription, value); }
+            set { SetProperty(ref _versionDescription, value); }
         }
 
         private ICommand _switchThemeCommand;

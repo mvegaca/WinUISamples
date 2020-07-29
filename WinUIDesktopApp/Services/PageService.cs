@@ -20,7 +20,7 @@ namespace WinUIDesktopApp.Services
             Configure<ContentGridDetailViewModel, ContentGridDetailPage>();
             Configure<WebViewViewModel, WebViewPage>();
             Configure<DataGridViewModel, DataGridPage>();
-            Configure<SettingsViewModel, SettingsPage>();
+            Configure<SettingsViewModel, SettingsPage>();            
         }
 
         public Type GetPageType(string key)
@@ -38,7 +38,7 @@ namespace WinUIDesktopApp.Services
         }
 
         private void Configure<VM, V>()
-            where VM : ViewModelBase
+            where VM : ObservableRecipient
             where V : Page
         {
             lock (_pages)

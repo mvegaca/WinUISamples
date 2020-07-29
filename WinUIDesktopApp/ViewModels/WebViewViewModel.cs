@@ -7,7 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace WinUIDesktopApp.ViewModels
 {
-    public class WebViewViewModel : ViewModelBase
+    public class WebViewViewModel : ObservableRecipient
     {
         // TODO WTS: Set the URI of the page to show by default
         private const string DefaultUrl = "https://docs.microsoft.com/windows/apps/";
@@ -27,7 +27,7 @@ namespace WinUIDesktopApp.ViewModels
         public Uri Source
         {
             get { return _source; }
-            set { Set(ref _source, value); }
+            set { SetProperty(ref _source, value); }
         }
 
         public bool IsLoading
@@ -43,7 +43,7 @@ namespace WinUIDesktopApp.ViewModels
                     IsShowingFailedMessage = false;
                 }
 
-                Set(ref _isLoading, value);
+                SetProperty(ref _isLoading, value);
                 IsLoadingVisibility = value ? Visibility.Visible : Visibility.Collapsed;
             }
         }
@@ -51,7 +51,7 @@ namespace WinUIDesktopApp.ViewModels
         public Visibility IsLoadingVisibility
         {
             get { return _isLoadingVisibility; }
-            set { Set(ref _isLoadingVisibility, value); }
+            set { SetProperty(ref _isLoadingVisibility, value); }
         }
 
         public bool IsShowingFailedMessage
@@ -68,7 +68,7 @@ namespace WinUIDesktopApp.ViewModels
                     IsLoading = false;
                 }
 
-                Set(ref _isShowingFailedMessage, value);
+                SetProperty(ref _isShowingFailedMessage, value);
                 FailedMesageVisibility = value ? Visibility.Visible : Visibility.Collapsed;
             }
         }
@@ -76,7 +76,7 @@ namespace WinUIDesktopApp.ViewModels
         public Visibility FailedMesageVisibility
         {
             get { return _failedMesageVisibility; }
-            set { Set(ref _failedMesageVisibility, value); }
+            set { SetProperty(ref _failedMesageVisibility, value); }
         }
 
         public ICommand BrowserBackCommand => _browserBackCommand ?? (_browserBackCommand = new RelayCommand(

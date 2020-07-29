@@ -10,7 +10,7 @@ using WinUIDesktopApp.Views;
 
 namespace WinUIDesktopApp.ViewModels
 {
-    public class ShellViewModel : ViewModelBase
+    public class ShellViewModel : ObservableRecipient
     {
         private readonly INavigationService _navigationService;
         private readonly IPageService _pageService;
@@ -21,13 +21,13 @@ namespace WinUIDesktopApp.ViewModels
         public bool IsBackEnabled
         {
             get { return _isBackEnabled; }
-            set { Set(ref _isBackEnabled, value); }
+            set { SetProperty(ref _isBackEnabled, value); }
         }
 
         public NavigationViewItem Selected
         {
             get { return _selected; }
-            set { Set(ref _selected, value); }
+            set { SetProperty(ref _selected, value); }
         }
 
         public ShellViewModel(INavigationService navigationService, IPageService pageService)

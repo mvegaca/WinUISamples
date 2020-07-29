@@ -3,7 +3,7 @@ using WinUIDesktopApp.Helpers;
 
 namespace WinUIDesktopApp.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : ObservableRecipient
     {
         public MainViewModel()
         {
