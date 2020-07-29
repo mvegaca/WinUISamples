@@ -80,6 +80,9 @@ namespace WinUIDesktopApp
             services.AddTransient<WebViewViewModel>();
             services.AddTransient<WebViewPage>();
 
+            services.AddTransient<FormViewModel>();
+            services.AddTransient<FormPage>();
+
             services.AddTransient<SettingsViewModel>();
             services.AddTransient<SettingsPage>();
         }
