@@ -7,46 +7,83 @@
     mc:Ignorable="d"
     Style="{StaticResource PageStyle}">
 
-    <Grid Margin="{StaticResource MediumLeftRightMargin}">
+    <ScrollViewer>
         <StackPanel
-            x:Name="ContentArea">
-            <TextBlock Text="Shipping information" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            x:Name="ContentArea"
+            Margin="{StaticResource MediumLeftRightMargin}">
+            <TextBlock Text="New order" Style="{ThemeResource SubtitleTextBlockStyle}" />
+            <TextBlock Text="Order ID" Style="{ThemeResource BodyTextBlockStyle}" Margin="{StaticResource XSmallTopMargin}" />
+            <TextBlock Text="{x:Bind ViewModel.OrderID, Mode=OneWay}" Style="{ThemeResource BodyTextBlockStyle}" Margin="{StaticResource XSmallTopMargin}" FontWeight="Bold" />
+            <TextBlock Text="Order Date" Style="{ThemeResource BodyTextBlockStyle}" Margin="{StaticResource XSmallTopMargin}" />
+            <StackPanel Margin="{StaticResource XSmallTopMargin}" Orientation="Horizontal">
+                <DatePicker
+                    SelectedDate="{x:Bind ViewModel.OrderDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TimePicker
+                    Margin="{StaticResource XSmallLeftMargin}"
+                    SelectedTime="{x:Bind ViewModel.OrderTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <TextBlock Text="Required Date" Style="{ThemeResource BodyTextBlockStyle}" Margin="{StaticResource XSmallTopMargin}" />
+            <StackPanel Margin="{StaticResource XSmallTopMargin}" Orientation="Horizontal">
+                <DatePicker
+                    SelectedDate="{x:Bind ViewModel.RequiredDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TimePicker
+                    Margin="{StaticResource XSmallLeftMargin}"
+                    SelectedTime="{x:Bind ViewModel.RequiredTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <TextBlock Text="Shipped Date" Style="{ThemeResource BodyTextBlockStyle}" Margin="{StaticResource XSmallTopMargin}" />
+            <StackPanel Margin="{StaticResource XSmallTopMargin}" Orientation="Horizontal">
+                <DatePicker
+                    SelectedDate="{x:Bind ViewModel.ShippedDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <TimePicker
+                    Margin="{StaticResource XSmallLeftMargin}"
+                    SelectedTime="{x:Bind ViewModel.ShippedTime, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            </StackPanel>
+            <TextBox
+                Margin="{StaticResource MediumTopMargin}"
+                HorizontalAlignment="Stretch"
+                Text="{x:Bind ViewModel.ShipperName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Header="ShipperName "
+                PlaceholderText="Enter shipper name" />
             <TextBox
                 Margin="{StaticResource XSmallTopMargin}"
                 HorizontalAlignment="Stretch"
-                Text="{x:Bind ViewModel.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Header="Name"
-                PlaceholderText="Enter name" />
+                Text="{x:Bind ViewModel.ShipperPhone, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Header="ShipperPhone "
+                PlaceholderText="Enter shipper phone " />
             <TextBox
                 Margin="{StaticResource XSmallTopMargin}"
                 HorizontalAlignment="Stretch"
-                Text="{x:Bind ViewModel.Surname, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Header="Surname"
-                PlaceholderText="Enter surname" />
+                Text="{x:Bind ViewModel.Company, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Header="Company "
+                PlaceholderText="Enter company" />
             <TextBox
                 Margin="{StaticResource XSmallTopMargin}"
                 HorizontalAlignment="Stretch"
-                Text="{x:Bind ViewModel.Address, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Header="Address"
-                PlaceholderText="Enter address" />
+                Text="{x:Bind ViewModel.ShipTo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Header="ShipTo"
+                PlaceholderText="Enter ship to" />
+            <TextBox
+                Margin="{StaticResource MediumTopMargin}"
+                HorizontalAlignment="Stretch"
+                Text="{x:Bind ViewModel.Freight, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Header="Freight "
+                PlaceholderText="Enter freight" />
             <TextBox
                 Margin="{StaticResource XSmallTopMargin}"
                 HorizontalAlignment="Stretch"
-                Text="{x:Bind ViewModel.City, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Header="City"
-                PlaceholderText="Enter city" />
-            <TextBox
+                Text="{x:Bind ViewModel.OrderTotal, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                Header="OrderTotal"
+                PlaceholderText="Enter order total" />
+            <TextBlock Text="Status" Style="{ThemeResource BodyTextBlockStyle}" Margin="{StaticResource XSmallTopMargin}" />
+            <ComboBox
                 Margin="{StaticResource XSmallTopMargin}"
                 HorizontalAlignment="Stretch"
-                Text="{x:Bind ViewModel.State, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Header="State"
-                PlaceholderText="Enter state" />
-            <TextBox
-                Margin="{StaticResource XSmallTopMargin}"
-                HorizontalAlignment="Stretch"
-                Text="{x:Bind ViewModel.ZipCode, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                Header="ZipCode"
-                PlaceholderText="Enter zip code" />
+                ItemsSource="{x:Bind ViewModel.StatusValues}"
+                SelectedItem="{x:Bind ViewModel.Status, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <Button
+                Margin="{StaticResource MediumTopBottomMargin}"
+                Content="Save order"
+                Command="{x:Bind ViewModel.SaveOrderCommand}" />
         </StackPanel>
-    </Grid>
+    </ScrollViewer>
 </Page>

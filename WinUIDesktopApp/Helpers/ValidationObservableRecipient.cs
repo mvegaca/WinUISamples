@@ -12,7 +12,7 @@ namespace WinUIDesktopApp.Helpers
     {
         private Dictionary<string, List<ValidationResult>> _errors = new Dictionary<string, List<ValidationResult>>();
 
-        public bool HasErrors => _errors.Any();
+        public bool HasErrors => _errors.Any(e => e.Value.Any());
 
         public IEnumerable<object> GetErrors(string propertyName)
             => _errors[propertyName];
@@ -24,14 +24,35 @@ namespace WinUIDesktopApp.Helpers
             var result = SetProperty(ref currentValue, newValue, propertyName);
             if (result)
             {
-                ClearErrors(propertyName);
-                var validationResults = new List<ValidationResult>();
-                var validationResult = Validator.TryValidateProperty(newValue, new ValidationContext(this, null, null) { MemberName = propertyName }, validationResults);
+                ValidateProperty(propertyName, newValue);
+            }
+        }
 
-                if (!validationResult)
-                {
-                    AddErrors(propertyName, validationResults);
-                }
+        protected void ValidateProperties(Dictionary<string, object> properties)
+        {
+            foreach (var property in properties)
+            {
+                ValidateProperty(property.Key, property.Value);
+            }
+        }
+
+        protected void ClearErrors()
+        {
+            foreach (var error in _errors)
+            {
+                ClearErrors(error.Key);
+            }
+        }
+
+        private void ValidateProperty(string propertyName, object newValue)
+        {
+            ClearErrors(propertyName);
+            var validationResults = new List<ValidationResult>();
+            var validationResult = Validator.TryValidateProperty(newValue, new ValidationContext(this, null, null) { MemberName = propertyName }, validationResults);
+
+            if (!validationResult)
+            {
+                AddErrors(propertyName, validationResults);
             }
         }
 

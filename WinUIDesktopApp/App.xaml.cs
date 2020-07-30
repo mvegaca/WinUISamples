@@ -59,7 +59,7 @@ namespace WinUIDesktopApp
             services.AddTransient<IToastNotificationsService, ToastNotificationsService>();
 
             // Core Services
-            services.AddTransient<ISampleDataService, SampleDataService>();
+            services.AddSingleton<ISampleDataService, SampleDataService>();
 
             // Views and ViewModels
             services.AddTransient<IShellWindow, ShellWindow>();

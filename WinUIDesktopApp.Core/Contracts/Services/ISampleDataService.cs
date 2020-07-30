@@ -11,5 +11,7 @@ namespace WinUIDesktopApp.Core.Contracts.Services
         Task<IEnumerable<SampleOrder>> GetContentGridDataAsync();
 
         Task<IEnumerable<SampleOrder>> GetGridDataAsync();
+
+        Task GetSampleOrderAsync(SampleOrder order);
     }
 }

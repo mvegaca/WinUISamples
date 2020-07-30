@@ -9,7 +9,7 @@ namespace WinUIDesktopApp.Core.Services
 {
     public class SampleDataService : ISampleDataService
     {
-        private IEnumerable<SampleOrder> _allOrders;
+        private List<SampleOrder> _allOrders;
 
         private IEnumerable<SampleOrder> AllOrders()
         {
@@ -493,7 +493,7 @@ namespace WinUIDesktopApp.Core.Services
         {
             if (_allOrders == null)
             {
-                _allOrders = AllOrders();
+                _allOrders = new List<SampleOrder>(AllOrders());
             }
 
             await Task.CompletedTask;
@@ -505,6 +505,17 @@ namespace WinUIDesktopApp.Core.Services
         {
             await Task.CompletedTask;
             return AllOrders();
+        }
+
+        public async Task GetSampleOrderAsync(SampleOrder order)
+        {
+            if (_allOrders == null)
+            {
+                _allOrders = new List<SampleOrder>(AllOrders());
+            }
+
+            _allOrders.Add(order);
+            await Task.CompletedTask;
         }
     }
 }
