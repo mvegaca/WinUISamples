@@ -484,8 +484,13 @@ namespace WinUIDesktopApp.Core.Services
         // TODO WTS: Remove this once your MasterDetail pages are displaying real data.
         public async Task<IEnumerable<SampleOrder>> GetMasterDetailDataAsync()
         {
+            if (_allOrders == null)
+            {
+                _allOrders = new List<SampleOrder>(AllOrders());
+            }
+
             await Task.CompletedTask;
-            return AllOrders();
+            return _allOrders;
         }
 
         // TODO WTS: Remove this once your ContentGrid page is displaying real data.
@@ -503,11 +508,16 @@ namespace WinUIDesktopApp.Core.Services
         // TODO WTS: Remove this once your grid page is displaying real data.
         public async Task<IEnumerable<SampleOrder>> GetGridDataAsync()
         {
+            if (_allOrders == null)
+            {
+                _allOrders = new List<SampleOrder>(AllOrders());
+            }
+
             await Task.CompletedTask;
-            return AllOrders();
+            return _allOrders;
         }
 
-        public async Task GetSampleOrderAsync(SampleOrder order)
+        public async Task SaveOrderAsync(SampleOrder order)
         {
             if (_allOrders == null)
             {

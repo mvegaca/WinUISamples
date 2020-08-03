@@ -12,7 +12,7 @@ namespace WinUIDesktopApp.Helpers
     {
         private Dictionary<string, List<ValidationResult>> _errors = new Dictionary<string, List<ValidationResult>>();
 
-        public bool HasErrors => _errors.Any(e => e.Value.Any());
+        public bool HasErrors => _errors.Any();
 
         public IEnumerable<object> GetErrors(string propertyName)
             => _errors[propertyName];
@@ -28,12 +28,18 @@ namespace WinUIDesktopApp.Helpers
             }
         }
 
-        protected void ValidateProperties(Dictionary<string, object> properties)
+        protected bool ValidateProperties(Dictionary<string, object> properties)
         {
+            bool hasValidationErrors = false;
             foreach (var property in properties)
             {
-                ValidateProperty(property.Key, property.Value);
+                if (ValidateProperty(property.Key, property.Value).Any())
+                {
+                    hasValidationErrors = true;
+                }
             }
+
+            return hasValidationErrors;
         }
 
         protected void ClearErrors()
@@ -44,7 +50,7 @@ namespace WinUIDesktopApp.Helpers
             }
         }
 
-        private void ValidateProperty(string propertyName, object newValue)
+        private IEnumerable<ValidationResult> ValidateProperty(string propertyName, object newValue)
         {
             ClearErrors(propertyName);
             var validationResults = new List<ValidationResult>();
@@ -54,20 +60,20 @@ namespace WinUIDesktopApp.Helpers
             {
                 AddErrors(propertyName, validationResults);
             }
+
+            return validationResults;
         }
 
         private void AddErrors(string propertyName, IEnumerable<ValidationResult> validationResults)
         {
-            if (_errors.TryGetValue(propertyName, out var propertyErrors))
+            List<ValidationResult> errors = null;
+            if (!_errors.TryGetValue(propertyName, out errors))
             {
-                propertyErrors.AddRange(validationResults);
+                errors = new List<ValidationResult>();
+                _errors.Add(propertyName, errors);
             }
-            else
-            {
-                _errors.Add(propertyName, new List<ValidationResult>(validationResults));
-            }
-
-            ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
+            errors.AddRange(validationResults);
+            ErrorsChanged?.Invoke(this, new Microsoft.UI.Xaml.Data.DataErrorsChangedEventArgs(propertyName));
         }
 
         private void ClearErrors(string propertyName)

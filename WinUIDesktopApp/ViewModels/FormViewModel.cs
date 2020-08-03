@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.Input;
+using Microsoft.UI.Xaml.Controls;
 using WinUIDesktopApp.Core.Contracts.Services;
 using WinUIDesktopApp.Core.Models;
 using WinUIDesktopApp.Helpers;
@@ -13,70 +14,80 @@ namespace WinUIDesktopApp.ViewModels
     public class FormViewModel : ValidationObservableRecipient
     {
         private readonly ISampleDataService _sampleDataService;
-        private long _orderID = new Random().Next(11000, 11500);
-        private DateTimeOffset _orderDate = DateTime.Now;
-        private DateTimeOffset _requiredDate = DateTime.Now;
-        private DateTimeOffset _shippedDate = DateTime.Now;
-        private TimeSpan _orderTime = DateTime.Now.TimeOfDay;
-        private TimeSpan _requiredTime = DateTime.Now.TimeOfDay;
-        private TimeSpan _shippedTime = DateTime.Now.TimeOfDay;
 
+        private long _orderID;
+        private DateTimeOffset _orderDate = DateTime.Now;
+        private TimeSpan _orderTime = DateTime.Now.TimeOfDay;
+        private string _company;
+        private char _symbol;
+        private string _orderTotal;
+        private string _freight;
+        private string _status;
         private string _shipperName;
         private string _shipperPhone;
-        private double _freight;
-        private string _company;
         private string _shipTo;
-        private double _orderTotal;
-        private string _status = "Shipped";
-        private ICommand _saveOrderCommand;
+        private ICommand _submitCommand;
 
+        [Required]
+        [Range(10000, 99999)]
         public long OrderID
         {
             get { return _orderID; }
-            set { _orderID = value; }
+            set { SetAndValidate(ref _orderID, value); }
         }
 
         [Required]
+        [DataType(DataType.Date)]
         public DateTimeOffset OrderDate
         {
             get { return _orderDate; }
-            set { _orderDate = value; }
+            set { SetAndValidate(ref _orderDate, value); }
         }
 
         [Required]
+        [DataType(DataType.Time)]
         public TimeSpan OrderTime
         {
             get { return _orderTime; }
-            set { _orderTime = value; }
+            set { SetAndValidate(ref _orderTime, value); }
         }
 
         [Required]
-        public DateTimeOffset RequiredDate
+        public string Company
         {
-            get { return _requiredDate; }
-            set { _requiredDate = value; }
+            get { return _company; }
+            set { SetAndValidate(ref _company, value); }
         }
 
         [Required]
-        public TimeSpan RequiredTime
+        public char Symbol
         {
-            get { return _requiredTime; }
-            set { _requiredTime = value; }
+            get { return _symbol; }
+            set { SetAndValidate(ref _symbol, value); }
         }
 
         [Required]
-        public DateTimeOffset ShippedDate
+        [CustomValidation(typeof(FormViewModel), "ValidateDoubleProperty")]
+        public string OrderTotal
         {
-            get { return _shippedDate; }
-            set { _shippedDate = value; }
+            get { return _orderTotal; }
+            set { SetAndValidate(ref _orderTotal, value); }
         }
 
         [Required]
-        public TimeSpan ShippedTime
+        [CustomValidation(typeof(FormViewModel), "ValidateDoubleProperty")]
+        public string Freight
         {
-            get { return _shippedTime; }
-            set { _shippedTime = value; }
+            get { return _freight; }
+            set { SetAndValidate(ref _freight, value); }
         }
+
+        [Required]
+        public string Status
+        {
+            get { return _status; }
+            set { SetAndValidate(ref _status, value); }
+        }        
 
         [Required]
         public string ShipperName
@@ -91,112 +102,103 @@ namespace WinUIDesktopApp.ViewModels
         {
             get { return _shipperPhone; }
             set { SetAndValidate(ref _shipperPhone, value); }
-        }
-
-        [CustomValidation(typeof(FormViewModel), "ValidateFreight")]
-        public double Freight
-        {
-            get { return _freight; }
-            set { SetAndValidate(ref _freight, value); }
-        }
-
-        [Required]
-        public string Company
-        {
-            get { return _company; }
-            set { SetAndValidate(ref _company, value); }
-        }
+        }        
 
         [Required]
         public string ShipTo
         {
             get { return _shipTo; }
             set { SetAndValidate(ref _shipTo, value); }
-        }
-
-        public double OrderTotal
-        {
-            get { return _orderTotal; }
-            set { _orderTotal = value; }
-        }
-
-        [Required]
-        public string Status
-        {
-            get { return _status; }
-            set { SetAndValidate(ref _status, value); }
-        }
+        }        
 
         public IEnumerable<string> StatusValues { get; } = new List<string>()
         {
+            "New",
             "Shipped",
             "Closed"
         };
 
-        public ICommand SaveOrderCommand => _saveOrderCommand ?? (_saveOrderCommand = new RelayCommand(SaveOrder));
+        public IEnumerable<char> SymbolValues { get; } = new List<char>()
+        {
+            (char)57643,
+            (char)57737,
+            (char)57699,
+            (char)57620,
+            (char)57633,
+            (char)57661,
+            (char)57619,
+            (char)57615
+        };
+
+        public ICommand SubmitCommand => _submitCommand ?? (_submitCommand = new RelayCommand(Submit));
 
         public FormViewModel(ISampleDataService sampleDataService)
         {
             _sampleDataService = sampleDataService;
             Status = StatusValues.First();
+            Symbol = SymbolValues.First();
         }
 
-        private void SaveOrder()
+        private async void Submit()
         {
-            ValidateProperties(new Dictionary<string, object>()
+            var hasValidationErrors = ValidateProperties(new Dictionary<string, object>()
             {
-                { nameof(ShipperName), ShipperName },
-                { nameof(ShipperPhone), ShipperPhone },
-                { nameof(Freight), Freight },
+                { nameof(OrderID), OrderID},                
+                { nameof(OrderDate), OrderDate},
+                { nameof(OrderTime), OrderTime},
                 { nameof(Company), Company },
+                { nameof(Symbol), Symbol},
+                { nameof(OrderTotal), OrderTotal},
+                { nameof(Freight), Freight},
+                { nameof(Status), Status},
+                { nameof(ShipperName), ShipperName },
+                { nameof(ShipperPhone), ShipperPhone },                
                 { nameof(ShipTo), ShipTo }
             });
 
-            if (HasErrors)
+            if (hasValidationErrors)
             {
                 return;
             }
 
-            _sampleDataService.GetSampleOrderAsync(new SampleOrder()
+            await _sampleDataService.SaveOrderAsync(new SampleOrder()
             {
                 OrderID = OrderID,
                 OrderDate = new DateTime(OrderDate.Year, OrderDate.Month, OrderDate.Day, OrderTime.Hours, OrderTime.Minutes, OrderTime.Seconds),
-                RequiredDate = new DateTime(RequiredDate.Year, RequiredDate.Month, RequiredDate.Day, RequiredTime.Hours, RequiredTime.Minutes, RequiredTime.Seconds),
-                ShippedDate = new DateTime(ShippedDate.Year, ShippedDate.Month, ShippedDate.Day, ShippedTime.Hours, ShippedTime.Minutes, ShippedTime.Seconds),
                 ShipperName = ShipperName,
                 ShipperPhone = ShipperPhone,
-                Freight = Freight,
                 Company = Company,
                 ShipTo = ShipTo,
-                OrderTotal = OrderTotal,
-                Status = Status
+                OrderTotal = double.Parse(OrderTotal),
+                Status = Status,
+                Freight = double.Parse(Freight),
+                SymbolCode = Symbol
             });
 
-            OrderID = new Random().Next(11000, 11500);
+            // Set default values
+            OrderID = default;
             OrderDate = DateTime.Now;
-            RequiredDate = DateTime.Now;
-            ShippedDate = DateTime.Now;
+            OrderTime = DateTime.Now.TimeOfDay;
             ShipperName = string.Empty;
             ShipperPhone = string.Empty;
-            Freight = 0;
             Company = string.Empty;
             ShipTo = string.Empty;
-            OrderTotal = 0;
+            OrderTotal = default;
+            Freight = default;
             Status = StatusValues.First();
+            Symbol = SymbolValues.First();
             ClearErrors();
+            //var dialog = new ContentDialog()
+            //{
+            //    Title = "New Order",
+            //    Content = "Order submitted successfully",
+            //    CloseButtonText = "Ok"
+            //};
+
+            //await dialog.ShowAsync();
         }
 
-        public static ValidationResult ValidateFreight(double freight)
-        {
-            if (freight > 0)
-            {
-                return ValidationResult.Success;
-            }
-            else
-            {
-                return new ValidationResult(
-                    "Freight must be greater than zero");
-            }
-        }
+        public static ValidationResult ValidateDoubleProperty(string property)
+            => double.TryParse(property, out var result) ? ValidationResult.Success : new ValidationResult("Double property required");
     }
 }
